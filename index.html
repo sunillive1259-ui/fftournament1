@@ -1,22 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
-  <title>Sunil FF Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Tournament</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
 
-<body style="background:#0b1220;color:white;text-align:center;padding:40px">
+  <div class="bg-gray-800 p-6 rounded-xl w-96 shadow-lg">
+    <h2 class="text-white text-2xl font-bold text-center mb-6">
+      🔐 Login
+    </h2>
 
-  <h2>Login with Mobile</h2>
+    <!-- Mobile -->
+    <input
+      id="mobile"
+      type="tel"
+      placeholder="Mobile Number"
+      class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white outline-none"
+    />
 
-  <input id="phone" placeholder="+91XXXXXXXXXX"><br><br>
-  <button onclick="sendOTP()">Send OTP</button><br><br>
+    <!-- Password -->
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+      class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white outline-none"
+    />
 
-  <input id="otp" placeholder="Enter OTP"><br><br>
-  <button onclick="verifyOTP()">Verify OTP</button>
+    <!-- Button -->
+    <button
+      onclick="loginUser()"
+      class="w-full bg-green-500 hover:bg-green-600 text-black font-bold py-2 rounded"
+    >
+      Login
+    </button>
 
-  <div id="recaptcha-container"></div>
+    <p id="msg" class="text-center mt-4 text-sm"></p>
+  </div>
 
-  <script src="firebase.js" type="module"></script>
+<script>
+  // Demo user (later Firebase se replace kar dena)
+  localStorage.setItem("user_mobile", "9876543210");
+  localStorage.setItem("user_password", "123456");
+
+  function loginUser() {
+    const mobile = document.getElementById("mobile").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const msg = document.getElementById("msg");
+
+    if (mobile === "" || password === "") {
+      msg.innerText = "❌ Sab fields bharo";
+      msg.className = "text-red-400 text-center mt-4";
+      return;
+    }
+
+    if (mobile.length !== 10) {
+      msg.innerText = "❌ Valid mobile number daalo";
+      msg.className = "text-red-400 text-center mt-4";
+      return;
+    }
+
+    const savedMobile = localStorage.getItem("user_mobile");
+    const savedPassword = localStorage.getItem("user_password");
+
+    if (mobile === savedMobile && password === savedPassword) {
+      msg.innerText = "✅ Login successful!";
+      msg.className = "text-green-400 text-center mt-4";
+
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 1000);
+    } else {
+      msg.innerText = "❌ Mobile ya password galat hai";
+      msg.className = "text-red-400 text-center mt-4";
+    }
+  }
+</script>
+
 </body>
 </html>
