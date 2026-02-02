@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sunil FF Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body style="background:#0b1220;color:white;padding:20px">
+
+<!-- 🔝 TITLE (2 TAP SECRET) -->
+<h2 id="secretTitle">Sunil FF Tournament</h2>
+
+<p id="user"></p>
+
+<!-- WALLET -->
+<div style="background:#111827;padding:15px;border-radius:10px;margin-bottom:15px">
+  <h3>Wallet</h3>
+  <p>Balance: ₹<span id="bal">0</span></p>
+  <button onclick="location.href='wallet.html'">Add Money</button>
+  <br><br>
+  <button onclick="location.href='withdraw.html'">Withdraw</button>
+</div>
+
+<!-- HISTORY -->
+<div style="background:#111827;padding:15px;border-radius:10px;margin-bottom:15px">
+  <h3>History</h3>
+  <div id="history"></div>
+</div>
+
+<button onclick="logout()">Logout</button>
+
+<script>
+let user = JSON.parse(localStorage.getItem("user"));
+if (!user) location.href = "index.html";
+
+user.balance = user.balance || 0;
+user.history = user.history || [];
+localStorage.setItem("user", JSON.stringify(user));
+
+document.getElementById("user").innerText = "Logged in: " + user.phone;
+document.getElementById("bal").innerText = user.balance;
+
+// history
+let h = "";
+user.history.forEach(i => h += `<p>${i}</p>`);
+document.getElementById("history").innerHTML = h || "No history";
+
+// logout
+function logout() {
+  localStorage.removeItem("user");
+  location.href = "index.html";
+}
+
+/* 🔐 SECRET ADMIN ENTRY */
+let tap = 0;
+document.getElementById("secretTitle").onclick = () => {
+  tap++;
+  if (tap === 2) {
+    tap = 0;
+    const pass = prompt("Enter Admin Password");
+    if (pass === "125991") {
+      window.open("admin.html", "_blank");
+    } else {
+      alert("Wrong password");
+    }
+  }
+};
+</script>
+
+</body>
+</html>

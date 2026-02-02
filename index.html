@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sunil FF Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body style="background:#0b1220;color:white;text-align:center;padding:40px">
+
+  <h2>Login with Mobile</h2>
+
+  <input id="phone" placeholder="+91XXXXXXXXXX"><br><br>
+  <button onclick="sendOTP()">Send OTP</button><br><br>
+
+  <input id="otp" placeholder="Enter OTP"><br><br>
+  <button onclick="verifyOTP()">Verify OTP</button>
+
+  <div id="recaptcha-container"></div>
+
+  <script src="firebase.js" type="module"></script>
+</body>
+</html>

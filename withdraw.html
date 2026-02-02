@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Withdraw</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body style="background:#0b1220;color:white;padding:20px">
+
+<h2>Withdraw Money</h2>
+
+<input id="amount" placeholder="Amount ₹"><br><br>
+<input id="upi" placeholder="UPI ID"><br><br>
+
+<button onclick="request()">Request Withdraw</button>
+
+<script>
+function request() {
+  const amt = document.getElementById("amount").value;
+  const upi = document.getElementById("upi").value;
+
+  if (!amt || !upi) {
+    alert("All fields required");
+    return;
+  }
+
+  const w = JSON.parse(localStorage.getItem("withdraw")) || [];
+  w.push({
+    amount: amt,
+    upi: upi,
+    status: "Pending"
+  });
+
+  localStorage.setItem("withdraw", JSON.stringify(w));
+  alert("Withdraw request sent. Admin will approve.");
+  location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+</head>
+
+<body style="background:#0b1220;color:white;padding:20px">
+
+<h2>Sunil FF Admin</h2>
+
+<input id="pass" placeholder="Admin Password">
+<button onclick="login()">Login</button>
+
+<div id="panel" style="display:none">
+
+<h3>UTR Requests</h3>
+<div id="utrList"></div>
+
+<h3>Withdraw Requests</h3>
+<div id="wdList"></div>
+
+</div>
+
+<script>
+const PASS = "123";
+
+function login() {
+  if (document.getElementById("pass").value === PASS) {
+    document.getElementById("panel").style.display = "block";
+    load();
+  } else {
+    alert("Wrong password");
+  }
+}
+
+function load() {
+  // UTR
+  const utr = JSON.parse(localStorage.getItem("utr")) || [];
+  let uhtml = "";
+
+  utr.forEach((r, i) => {
+    uhtml += `
+      <div style="border:1px solid gray;padding:10px;margin:10px">
+        ₹${r.amt} | ${r.utr} | ${r.status}
+        <button onclick="approveUTR(${i})">Approve</button>
+      </div>`;
+  });
+  document.getElementById("utrList").innerHTML = uhtml || "No UTR";
+
+  // Withdraw
+  const wd = JSON.parse(localStorage.getItem("withdraw")) || [];
+  let whtml = "";
+
+  wd.forEach((r, i) => {
+    whtml += `
+      <div style="border:1px solid gray;padding:10px;margin:10px">
+        ₹${r.amount} → ${r.upi} | ${r.status}
+        <button onclick="approveWD(${i})">Pay</button>
+      </div>`;
+  });
+  document.getElementById("wdList").innerHTML = whtml || "No Withdraw";
+}
+
+// ✅ ADD BALANCE
+function approveUTR(i) {
+  const utr = JSON.parse(localStorage.getItem("utr"));
+  if (utr[i].status === "Approved") return;
+
+  let user = JSON.parse(localStorage.getItem("user"));
+  user.balance += Number(utr[i].amt);
+  user.history.push("Added ₹" + utr[i].amt);
+  localStorage.setItem("user", JSON.stringify(user));
+
+  utr[i].status = "Approved";
+  localStorage.setItem("utr", JSON.stringify(utr));
+
+  alert("Balance added");
+  load();
+}
+
+// ❌ DEDUCT BALANCE
+function approveWD(i) {
+  const wd = JSON.parse(localStorage.getItem("withdraw"));
+  if (wd[i].status === "Paid") return;
+
+  let user = JSON.parse(localStorage.getItem("user"));
+
+  if (user.balance < wd[i].amount) {
+    alert("Insufficient balance");
+    return;
+  }
+
+  user.balance -= Number(wd[i].amount);
+  user.history.push("Withdraw ₹" + wd[i].amount);
+  localStorage.setItem("user", JSON.stringify(user));
+
+  wd[i].status = "Paid";
+  localStorage.setItem("withdraw", JSON.stringify(wd));
+
+  alert("Withdraw marked paid");
+  load();
+}
+</script>
+
+</body>
+</html>
