@@ -1,94 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Login | Tournament</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #0f172a, #020617);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      color: #fff;
-    }
-
-    .login-box {
-      background: #020617;
-      padding: 30px;
-      width: 320px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.6);
-      text-align: center;
-    }
-
-    .login-box h2 {
-      margin-bottom: 20px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border-radius: 6px;
-      border: none;
-      outline: none;
-      font-size: 14px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #22c55e;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #16a34a;
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="login-box">
-    <h2>🔐 Login</h2>
-
-    <input id="phone" type="text" placeholder="Mobile Number">
-    <input id="password" type="password" placeholder="Password">
-
-    <button onclick="login()">Login</button>
-  </div>
-
-  <script>
-    function login() {
-      const phone = document.getElementById("phone").value;
-      const password = document.getElementById("password").value;
-
-      if (phone === "" || password === "") {
-        alert("Mobile number aur password dalo");
-        return;
-      }
-
-      // DEMO LOGIN (Firebase removed)
-      localStorage.setItem("user", JSON.stringify({
-        phone: phone,
-        role: "user",
-        balance: 0
-      }));
-
-      // redirect
-      window.location.href = "dashboard.html";
-    }
-  </script>
-
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>FF Tournament</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

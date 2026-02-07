@@ -1,0 +1,18 @@
+/* default (dark) */
+:root {
+  --bg-color: #020617;
+  --card-color: #0f172a;
+  --primary-color: #4f46e5;
+  --text-color: #e5e7eb;
+  --muted-text: #94a3b8;
+  --border-radius: 12px;
+}
+
+/* light theme override */
+.light {
+  --bg-color: #f8fafc;
+  --card-color: #ffffff;
+  --primary-color: #2563eb;
+  --text-color: #020617;
+  --muted-text: #475569;
+}
